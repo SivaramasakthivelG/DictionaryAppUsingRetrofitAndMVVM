@@ -1,14 +1,15 @@
 package com.example.dictionary.view
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -26,19 +27,18 @@ import com.example.dictionary.viewModel.DictionaryViewModel
 @Composable
 fun DictionaryScreen(modifier: Modifier, viewModel: DictionaryViewModel) {
     val uiState by viewModel.uiState.collectAsState();
-    Content(modifier, uiState) { query-> viewModel.updateWord(query) }
+    Content(modifier, uiState) { query -> viewModel.updateWord(query) }
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Content(modifier: Modifier, uiState: DictionaryScreen.UiState, onQuery: (String) -> Unit) {
+fun Content(
+    modifier: Modifier,
+    uiState: DictionaryScreen.UiState,
+    onQuery: (String) -> Unit
+) {
     val query = rememberSaveable() { mutableStateOf("") }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        // Search TextField
+    Scaffold(modifier, topBar = {
         TextField(
             value = query.value,
             onValueChange = {
@@ -48,59 +48,58 @@ fun Content(modifier: Modifier, uiState: DictionaryScreen.UiState, onQuery: (Str
             placeholder = { Text("Search") },
             modifier = Modifier.fillMaxWidth()
         )
+    }) {
+        Column(modifier.fillMaxWidth().padding(top = 40.dp)) {
+            if (uiState.isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 20.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
 
-        Spacer(modifier = Modifier.height(16.dp))  // Spacer to add some space below TextField
+            // Error message
+            if (uiState.error.isNotEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 20.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = uiState.error,
+                        color = Color.Red,
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+            }
 
-        // Loading indicator
-        if (uiState.isLoading) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
+            // Display search results
+            uiState.data?.let { results ->
+                Spacer(modifier = Modifier.height(16.dp))  // Space between elements
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Text(
+                        text = "Word: ${results.first().word}",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                    Spacer(modifier = Modifier.height(8.dp)) // Space between word and meanings
+                    Text(
+                        text = "Meanings: ${results.first().meanings}",
+                        style = MaterialTheme.typography.bodySmall
+                    )
+
+                }
             }
         }
 
-        // Error message
-        if (uiState.error.isNotEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = uiState.error,
-                    color = Color.Red,
-                    style = MaterialTheme.typography.bodySmall
-                )
-            }
-        }
 
-        // Display search results
-        uiState.data?.let { results ->
-            Spacer(modifier = Modifier.height(16.dp))  // Space between elements
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Text(
-                    text = "Word: ${results.first().word}",
-                    style = MaterialTheme.typography.bodySmall
-                )
-                Spacer(modifier = Modifier.height(8.dp)) // Space between word and meanings
-                Text(
-                    text = "Meanings: ${results.first().meanings}",
-                    style = MaterialTheme.typography.bodySmall
-                )
-
-            }
-        }
     }
-
-
 
 }
