@@ -1,4 +1,4 @@
-package com.example.dictionary.data.di
+package com.example.dictionary.di
 
 import com.example.dictionary.data.remote.ApiService
 import com.example.dictionary.data.repository.DictionaryRepo
@@ -31,7 +31,7 @@ object HiltModule {
     }
 
     @Provides
-    fun provideRepo(apiService: ApiService): DictionaryRepo{
+    fun provideRepo(apiService: ApiService): DictionaryRepo {
         return DictionaryRepo(apiService)
     }
 

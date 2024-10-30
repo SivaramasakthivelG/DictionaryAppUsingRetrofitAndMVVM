@@ -1,4 +1,4 @@
-package com.example.dictionary.view
+package com.example.dictionary.ui.view
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
@@ -21,8 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.dictionary.viewModel.DictionaryScreen
-import com.example.dictionary.viewModel.DictionaryViewModel
+import com.example.dictionary.ui.viewModel.DictionaryScreen
+import com.example.dictionary.ui.viewModel.DictionaryViewModel
 
 @Composable
 fun DictionaryScreen(modifier: Modifier, viewModel: DictionaryViewModel) {

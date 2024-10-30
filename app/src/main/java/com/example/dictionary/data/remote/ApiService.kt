@@ -1,6 +1,6 @@
 package com.example.dictionary.data.remote
 
-import com.example.dictionary.data.DictionaryResponse
+import com.example.dictionary.data.remote_model.DictionaryResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

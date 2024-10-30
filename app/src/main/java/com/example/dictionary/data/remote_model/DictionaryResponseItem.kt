@@ -1,4 +1,4 @@
-package com.example.dictionary.data
+package com.example.dictionary.data.remote_model
 
 data class DictionaryResponseItem(
     val license: License,

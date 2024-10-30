@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.dictionary.ui.theme.DictionaryTheme
-import com.example.dictionary.view.DictionaryScreen
-import com.example.dictionary.viewModel.DictionaryScreen
-import com.example.dictionary.viewModel.DictionaryViewModel
+import com.example.dictionary.ui.view.DictionaryScreen
+import com.example.dictionary.ui.viewModel.DictionaryScreen
+import com.example.dictionary.ui.viewModel.DictionaryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

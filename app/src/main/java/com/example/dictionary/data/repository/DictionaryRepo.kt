@@ -1,6 +1,6 @@
 package com.example.dictionary.data.repository
 
-import com.example.dictionary.data.DictionaryResponse
+import com.example.dictionary.data.remote_model.DictionaryResponse
 import com.example.dictionary.data.remote.ApiService
 import com.example.dictionary.data.remote_model.error.ErrorMessage
 import com.google.gson.Gson
